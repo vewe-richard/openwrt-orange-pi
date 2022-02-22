@@ -11,20 +11,18 @@ case $1 in
 	;;
 
 	x86-h3)
-	/home/richard/work/knet/qemu/build/qemu-system-arm -M virt,highmem=off -cpu cortex-a7  \
-		-smp 4 -m 1G \
-		-kernel allwiner/build_dir/target-arm_cortex-a7+neon-vfpv4_musl_eabi/linux-sunxi_cortexa7/zImage \
-		-append "root=/dev/sda rw console=ttyAMA0" \
-		-hda allwiner/bin/targets/sunxi/cortexa7/1.img \
-       		-nographic
+	KERNEL_IMAGE_PATH=allwiner/build_dir/target-arm_cortex-a7+neon-vfpv4_musl_eabi/linux-sunxi_cortexa7/zImage 
+	DTB_PATH=allwiner/build_dir/target-arm_cortex-a7+neon-vfpv4_musl_eabi/linux-sunxi_cortexa7/linux-5.4.179/arch/arm/boot/dts/sun8i-h3-orangepi-pc.dtb
 
-		#-kernel	allwiner/build_dir/target-arm_cortex-a7+neon-vfpv4_musl_eabi/linux-sunxi_cortexa7/linux-5.4.179/arch/arm/boot/zImage  \
-		#-kernel allwiner/build_dir/target-arm_cortex-a7+neon-vfpv4_musl_eabi/linux-sunxi_cortexa7/vmlinux.elf \
+	/home/richard/work/knet/qemu/build/qemu-system-arm -M orangepi-pc \
+		-nic user,hostfwd=tcp::5555-:22 -nographic \
+		-kernel $KERNEL_IMAGE_PATH\
+		-append 'console=ttyS0,115200 root=/dev/mmcblk0p2' \
+		-dtb $DTB_PATH\
+		-sd allwiner/bin/targets/sunxi/cortexa7/n1.img
 	;;
 
-
-
 	*)
-		echo "Unknown command $1"
+	echo "Unknown command $1"
 	;;
 esac

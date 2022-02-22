@@ -57,9 +57,9 @@ gunzip 1.img.gz
 
 For orange pi pc
 ```
-cd openwrt/bin/targets/x86/64/
-cp openwrt-21.02.2-x86-64-generic-ext4-rootfs.img.gz 1.img.gz
-gunzip 1.img.gz
+cd bin/targets/sunxi/cortexa7/
+cp openwrt-21.02.2-sunxi-cortexa7-xunlong_orangepi-pc-ext4-sdcard.img.gz n1.img.gz
+gunzip n1.img.gz
 ./qemu.sh x86-h3
 ```
 
@@ -74,7 +74,8 @@ CONFIG_VIDEO_SUNXI_CEDRUS
 
 ```
 make kernel_menuconfig
-make
+make -j 8
+make -j 8 world
 ```
 
 
@@ -84,3 +85,28 @@ make
 ### Good links on openwrt
 build module/application/package for openwrt
 https://www.ccs.neu.edu/home/noubir/Courses/CS6710/S12/material/OpenWrt_Dev_Tutorial.pdf
+
+### enable openwrt network
+```
+#/etc/config/network
+config interface 'wan'      
+        option ifname 'eth0'
+        option proto 'dhcp' 
+
+/etc/init.d/network restart
+```
+
+### copy from host
+```
+scp -P 33333 richard@192.168.100.1:/path/to/file ./
+```
+
+### install sshd
+```
+opkg update
+opkg install openssh-server
+```
+
+
+
+
