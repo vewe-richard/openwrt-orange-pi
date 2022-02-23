@@ -22,6 +22,18 @@ case $1 in
 		-sd allwiner/bin/targets/sunxi/cortexa7/n1.img
 	;;
 
+	x86-h3-mainline)
+	KERNEL_IMAGE_PATH=mainline/build_dir/target-arm_cortex-a7+neon-vfpv4_musl_eabi/linux-sunxi_cortexa7/zImage 
+	DTB_PATH=mainline/build_dir/target-arm_cortex-a7+neon-vfpv4_musl_eabi/linux-sunxi_cortexa7/linux-5.10.100/arch/arm/boot/dts/sun8i-h3-orangepi-pc.dtb
+
+	/home/richard/work/knet/qemu/build/qemu-system-arm -M orangepi-pc \
+		-nic user,hostfwd=tcp::5555-:22 -nographic \
+		-kernel $KERNEL_IMAGE_PATH\
+		-append 'console=ttyS0,115200 root=/dev/mmcblk0p2' \
+		-dtb $DTB_PATH\
+		-sd mainline/bin/targets/sunxi/cortexa7/n1.img
+	;;
+
 	*)
 	echo "Unknown command $1"
 	;;

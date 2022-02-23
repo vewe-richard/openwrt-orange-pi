@@ -40,10 +40,14 @@ wget https://downloads.openwrt.org/releases/21.02.2/targets/x86/64/config.buildi
 # configure for orange pi pc
 wget https://downloads.openwrt.org/releases/21.02.2/targets/sunxi/cortexa7/config.buildinfo -O .config
 make menuconfig #select target profile: Xunlong Orange Pi PC
+		#select image size to 256M or more
 
- 
+
+?make defconfig 
 # Build the firmware image
 make -j $(nproc) download clean world
+?make save defconfig
+?note: disable qosify when build mainline
 ```
 
 #### 3 test in qemu
@@ -60,6 +64,7 @@ For orange pi pc
 cd bin/targets/sunxi/cortexa7/
 cp openwrt-21.02.2-sunxi-cortexa7-xunlong_orangepi-pc-ext4-sdcard.img.gz n1.img.gz
 gunzip n1.img.gz
+qemu-img resize n1.img 512M
 ./qemu.sh x86-h3
 ```
 
