@@ -22,8 +22,9 @@ endef
 define Build/Prepare
 	mkdir -p $(PKG_BUILD_DIR)
 	cp -TR $(SOURCE_DIR) $(PKG_BUILD_DIR)
-	$(Build/Patch)
+	cd $(PKG_BUILD_DIR) && autoreconf -vi
 endef
+
 
 #define Build/Configure
 #endef

@@ -32,6 +32,7 @@ define Build/Prepare
 	$(Build/Patch)
 endef
 
+
 # Package build instructions; invoke the target-specific compiler to first compile the source file, and then to link the file into the final executable
 define Build/Compile
 # Package build instructions; invoke the GNU make tool to build our package
