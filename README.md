@@ -133,6 +133,7 @@ make menuconfig
 ./scripts/feeds install -a -p mypackages
 
 #change source code
+make -j1 V=s package/libva_v4l2_request/prepare #remove directory inside the build_dir
 make -j1 V=s package/libva_v4l2_request/clean   #remove directory inside the build_dir
 make -j1 V=s package/libva_v4l2_request/compile #maybe copy code from source
                                         #make menuconfig sometimes also copy?
