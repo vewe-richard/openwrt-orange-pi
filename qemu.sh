@@ -2,11 +2,11 @@
 case $1 in
 	x86-x86)
 	echo "qianjiang" | sudo -S chmod 666 /dev/kvm
-	qemu-system-x86_64  -smp 4 -enable-kvm -m 2G \
+	/home/richard/work/knet/qemu/build/qemu-system-x86_64  -smp 4 -enable-kvm -m 2G \
 		-kernel openwrt/build_dir/target-x86_64_musl/linux-x86_64/linux-5.4.179/arch/x86/boot/bzImage \
 		-append "root=/dev/sda rw console=ttyS0" \
 		-netdev user,id=n1,ipv6=off,hostfwd=tcp::5555-:22 -device e1000,netdev=n1 \
-		-hda /home/richard/work/2022/k516/openwrt/bin/targets/x86/64/1.img \
+		-hda /home/richard/work/2022/k516/openwrt/bin/targets/x86/64/n1.img \
        		-nographic
 	;;
 

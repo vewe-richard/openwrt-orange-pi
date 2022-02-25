@@ -40,14 +40,15 @@ wget https://downloads.openwrt.org/releases/21.02.2/targets/x86/64/config.buildi
 # configure for orange pi pc
 wget https://downloads.openwrt.org/releases/21.02.2/targets/sunxi/cortexa7/config.buildinfo -O .config
 make menuconfig #select target profile: Xunlong Orange Pi PC
-		#select image size to 256M or more
+		#select image size to 256M - 50M, later resize to 256M or 512M?
+		#libdrm ===> no, build from source code
+		?note: disable qosify when build mainline
 
 
 ?make defconfig 
 # Build the firmware image
-make -j $(nproc) download clean world
+make -j $(nproc) defconfig download clean world
 ?make save defconfig
-?note: disable qosify when build mainline
 ```
 
 #### 3 test in qemu
@@ -113,5 +114,29 @@ opkg install openssh-server
 ```
 
 
+# Appendix
+## Errors
+> scripts/config/mconf: error while loading shared libraries: libncurses.so.5: cannot open shared obje
+Fix: sudo apt-get install libncurses5
 
+> sudo apt update #fail
+sudo systemctl restart docker
+
+> openwrt package update and rebuild
+#first add package
+./scripts/feeds update mypackages
+./scripts/feeds install -a -p mypackages
+make menuconfig
+
+#update mypackages/../Makefile
+./scripts/feeds update mypackages
+./scripts/feeds install -a -p mypackages
+
+#change source code
+make -j1 V=s package/libva_v4l2_request/clean   #remove directory inside the build_dir
+make -j1 V=s package/libva_v4l2_request/compile #maybe copy code from source
+                                        #make menuconfig sometimes also copy?
+
+> create libva package to build in openwrt
+https://openwrt.org/docs/guide-developer/packages
 
