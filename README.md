@@ -119,7 +119,7 @@ opkg install openssh-server
 > scripts/config/mconf: error while loading shared libraries: libncurses.so.5: cannot open shared obje
 Fix: sudo apt-get install libncurses5
 
-> sudo apt update #fail
+> sudo apt update #fail as no network
 sudo systemctl restart docker
 
 > openwrt package update and rebuild
@@ -138,6 +138,38 @@ make -j1 V=s package/libva_v4l2_request/clean   #remove directory inside the bui
 make -j1 V=s package/libva_v4l2_request/compile #maybe copy code from source
                                         #make menuconfig sometimes also copy?
 
+
 > create libva package to build in openwrt
 https://openwrt.org/docs/guide-developer/packages
+
+> debug libva compiling issue
+- libva compiling fail
+  libdrm dependency check fail
+  add "pkg-config --list-all" to makefile/prepare in libva, and run make prepare
+  so, problem come to how to make libdrm build and install well
+- libdrm compiling report xorg-macros must be installed
+
+- investigate xorg-macros installation issue
+  autoreconf -d  
+  comparing and it means miss of xutils-dev in openwrt, the host side??(missing ../usr/share/aclocal)
+  so, 
+  https://github.com/suwus/openwrt-feeds-xorg/tree/master/utils/xorg-macros
+
+- compiling xorg-macros
+  but, how to seperate compiling this, it's too long to compile all
+  make package/libdrm_c/configure #can work
+  make package/xorg-macros/configure#can work
+  make V=s package/xorg-macros/compile
+ 
+  find staging_dir/ -name "xorg-macro" # no need to install?
+  
+- build libdrm again
+  make V=s package/libdrm/configure # work
+  make V=s package/libdrm/compile # work
+
+- build libva again
+  make V=s package/libva/compile
+
+
+> error, build fail on make world, need select new configuration
 

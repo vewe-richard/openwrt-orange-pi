@@ -1,31 +1,33 @@
 include $(TOPDIR)/rules.mk
  
-PKG_NAME:=libva
-PKG_VERSION:=2.14
+PKG_NAME:=libdrm_sun4i
+PKG_VERSION:=0.1
 PKG_RELEASE:=1
  
-SOURCE_DIR:=/home/richard/share/tmp/libva-2.14-branch
+SOURCE_DIR:=/home/richard/share/tmp/libdrm-sun4i
  
 include $(INCLUDE_DIR)/package.mk
 
-define Package/libva
+define Package/libdrm_sun4i
   SECTION:=examples
   CATEGORY:=Examples
-  TITLE:=libva
+  TITLE:=libdrm_sun4i
 endef
 
 # Package description; a more verbose description on what our package does
-define Package/libva/description
-	Standard libva
+define Package/libdrm_sun4i/description
+	Standard libdrm_sun4i
 endef
 
 define Build/Prepare
 	mkdir -p $(PKG_BUILD_DIR)
 	cp -TR $(SOURCE_DIR) $(PKG_BUILD_DIR)
-	cd $(PKG_BUILD_DIR) && ./autogen.sh
 endef
 
-
+define Build/Configure
+	(cd $(PKG_BUILD_DIR); ./autogen.sh)
+	$(call Build/Configure/Default)
+endef
 
 define Build/Compile
 	$(MAKE) -C $(PKG_BUILD_DIR) \
@@ -34,11 +36,7 @@ define Build/Compile
 		LDFLAGS="$(TARGET_LDFLAGS)"
 endef
  
-define Package/libva/install
-	$(INSTALL_DIR) $(1)/usr/lib/
-	$(CP) \
-		$(PKG_BUILD_DIR)/va/.libs/*.so* \
-		$(1)/usr/lib/
-endef
+#define Package/libdrm_sun4i/install
+#endef
  
-$(eval $(call BuildPackage,libva))
+$(eval $(call BuildPackage,libdrm_sun4i))

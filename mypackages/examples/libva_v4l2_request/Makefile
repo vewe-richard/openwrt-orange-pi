@@ -26,17 +26,19 @@ define Build/Prepare
 endef
 
 
-#define Build/Configure
-#endef
-
 define Build/Compile
 	$(MAKE) -C $(PKG_BUILD_DIR) \
 		CC="$(TARGET_CC)" \
 		CFLAGS="$(TARGET_CFLAGS)" \
 		LDFLAGS="$(TARGET_LDFLAGS)"
+	
 endef
  
-#define Package/libva_v4l2_request/install
-#endef
+define Package/libva_v4l2_request/install
+	$(INSTALL_DIR) $(1)/usr/lib/
+	$(CP) \
+		$(PKG_BUILD_DIR)/va/.libs/*.so* \
+		$(1)/usr/lib/
+endef
  
 $(eval $(call BuildPackage,libva_v4l2_request))
