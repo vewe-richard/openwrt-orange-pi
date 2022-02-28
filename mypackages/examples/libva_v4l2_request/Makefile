@@ -31,16 +31,11 @@ endef
 
 define Build/InstallDev
 	$(INSTALL_DIR) $(1)/usr/lib/
-	$(CP) $(PKG_BUILD_DIR)/.libs/*.so* $(1)/usr/lib
-endef
-
-
-define Build/InstallDev
-	true
+	$(CP) $(PKG_BUILD_DIR)/src/.libs/*.so* $(1)/usr/lib
 endef
 
 define Package/libva_v4l2_request/install
-	$(INSTALL_DIR) $(1)/usr/lib/
+	true
 endef
  
 $(eval $(call BuildPackage,libva_v4l2_request))
