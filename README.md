@@ -84,7 +84,34 @@ make -j 8
 make -j 8 world
 ```
 
+#### 5 build libva, libva-v4l2-request
+##### Preparation
+Download libva-v2.14-branch.zip, libva-v4l2-request-release-2019.03.zip to a directory and untar them.
+Clone openwrt-feeds-xorg. like this,
+```
+richard@richard-NH50-70RA:~/work/2022/k516/tmp$ pwd
+/home/richard/work/2022/k516/tmp
+richard@richard-NH50-70RA:~/work/2022/k516/tmp$ ls
+openwrt-feeds-xorg/         libva-2.14-branch/                   release-2019.03.zip
+libva-v2.14-branch.zip     libva-v4l2-request-release-2019.03/
+```
 
+```
+# put feeds.conf in the root directory of openwrt sourcecode
+# in the feeds.conf, must specify the correct mypackages location
+./scripts/feeds update mypackages
+./scripts/feeds install -a -p mypackages
+make menuconfig
+
+#select Examples/libva, libva_v4l2_request
+#select libdrm
+#seelct xorg/utils/xorg-macros
+
+make 
+```
+
+to build libva/libdrm/libva_v4l2_request
+> make V=s package/xxxxx/{clear,compile}
 
 
 # Appendix
@@ -197,4 +224,6 @@ https://openwrt.org/docs/guide-developer/packages
   make -j $(nproc) defconfig download clean 
   make -j1 V=s world  #use pipe to flush the default selection?
 
-> 
+> compiling error on libva-v4l2-request
+https://github.com/bootlin/libva-v4l2-request/issues/7
+just disable the error section temporarily
