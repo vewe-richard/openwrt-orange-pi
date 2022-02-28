@@ -22,23 +22,25 @@ endef
 define Build/Prepare
 	mkdir -p $(PKG_BUILD_DIR)
 	cp -TR $(SOURCE_DIR) $(PKG_BUILD_DIR)
-	cd $(PKG_BUILD_DIR) && autoreconf -vi
+endef
+
+define Build/Configure
+	(cd $(PKG_BUILD_DIR); ./autogen.sh)
+	$(call Build/Configure/Default)
+endef
+
+define Build/InstallDev
+	$(INSTALL_DIR) $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/.libs/*.so* $(1)/usr/lib
 endef
 
 
-define Build/Compile
-	$(MAKE) -C $(PKG_BUILD_DIR) \
-		CC="$(TARGET_CC)" \
-		CFLAGS="$(TARGET_CFLAGS)" \
-		LDFLAGS="$(TARGET_LDFLAGS)"
-	
+define Build/InstallDev
+	true
 endef
- 
+
 define Package/libva_v4l2_request/install
 	$(INSTALL_DIR) $(1)/usr/lib/
-	$(CP) \
-		$(PKG_BUILD_DIR)/va/.libs/*.so* \
-		$(1)/usr/lib/
 endef
  
 $(eval $(call BuildPackage,libva_v4l2_request))

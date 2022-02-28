@@ -169,7 +169,32 @@ https://openwrt.org/docs/guide-developer/packages
 
 - build libva again
   make V=s package/libva/compile
+  but, don't know how to install the libva. and make pkg-config know it
+  2022/02/27
+     * before the libva install issue. again, compiling libva can not find libdrm
+       when I try to use pkg-config --list-all, it passed??
+     * come to libva install issue
+       1. why make -j1 V=s package/libva/install, no target?
+       2. find a comparing
+ 
+- 2022/02/28
+  * compiling libva
+    make -j1 V=s package/libva/prepare --- does nothing
+    make -j1 V=s package/libva/configure --- does nothing
+    make -j1 V=s package/libva/compile --- does nothing
+    so, run
+    make -j1 V=s package/libva/clean
+    then, compile works
+    ---- but content is empty??? some logic delete it???
+         reason is, select as module in menuconfig???
+         no,xxx, only mistake can break the building process to suspend rm of result
 
 
 > error, build fail on make world, need select new configuration
 
+> A building try
+  
+  make -j $(nproc) defconfig download clean 
+  make -j1 V=s world  #use pipe to flush the default selection?
+
+> 
