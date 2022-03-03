@@ -16,6 +16,7 @@ openwrt on orange pi, video decoder using mali 400
 
 #### 2. build openwrt
 ```
+./docker.sh start
 # enter docker
 ./docker.sh
 cd share
@@ -41,14 +42,16 @@ wget https://downloads.openwrt.org/releases/21.02.2/targets/x86/64/config.buildi
 wget https://downloads.openwrt.org/releases/21.02.2/targets/sunxi/cortexa7/config.buildinfo -O .config
 make menuconfig #select target profile: Xunlong Orange Pi PC
 		#select image size to 256M - 50M, later resize to 256M or 512M?
-		#libdrm ===> no, build from source code
+		#libdrm
 		?note: disable qosify when build mainline
 
 
-?make defconfig 
 # Build the firmware image
 make -j $(nproc) defconfig download clean world
 ?make save defconfig
+
+# normal build
+yes "" | make -j $(nproc)
 ```
 
 #### 3 test in qemu
@@ -112,6 +115,9 @@ make
 
 to build libva/libdrm/libva_v4l2_request
 > make V=s package/xxxxx/{clear,compile}
+
+
+#### 6 build mali mali drivers
 
 
 # Appendix
