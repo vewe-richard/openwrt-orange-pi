@@ -68,7 +68,7 @@ For orange pi pc
 cd bin/targets/sunxi/cortexa7/
 cp openwrt-21.02.2-sunxi-cortexa7-xunlong_orangepi-pc-ext4-sdcard.img.gz n1.img.gz
 gunzip n1.img.gz
-qemu-img resize n1.img 512M
+qemu-img resize n1.img 512M(or 2048M?)
 ./qemu.sh x86-h3
 ```
 
@@ -233,3 +233,11 @@ https://openwrt.org/docs/guide-developer/packages
 > compiling error on libva-v4l2-request
 https://github.com/bootlin/libva-v4l2-request/issues/7
 just disable the error section temporarily
+
+> package stage code are missing
+use blow setting to leave the stage code
+```
+define Package/sunxi_mali/install
+	false
+endef
+```

@@ -15,4 +15,5 @@ https://coin-or-tools.github.io/BuildTools/configure
 https://coin-or-tools.github.io/BuildTools/autotools-intro
 
 
-
+DAY 03/03
+Mali driver had to be built natively
