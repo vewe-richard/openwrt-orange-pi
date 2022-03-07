@@ -17,3 +17,6 @@ https://coin-or-tools.github.io/BuildTools/autotools-intro
 
 DAY 03/03
 Mali driver had to be built natively
+
+DAY 03/07
+https://www.khronos.org/assets/uploads/books/openglr_es_20_programming_guide_sample.pdf
