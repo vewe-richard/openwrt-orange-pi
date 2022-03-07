@@ -241,3 +241,28 @@ define Package/sunxi_mali/install
 	false
 endef
 ```
+
+> sdcard format
+```
+sdc      8:32   1  29.7G  0 disk 
+└─sdc1   8:33   1  29.4G  0 part /media/...
+$ ls /media/...
+bin  boot  dev  etc  home  lib  lost+found  media  mnt  
+opt  proc  root  run  sbin  selinux  srv  sys  tmp  usr  var
+$ ls /media/.../boot/
+boot.bmp  boot.scr             dtb               initrd.img-5.4.65-sunxi  
+orangepi_first_run.txt.template  System.map-5.4.65-sunxi  uInitrd-5.4.65-sunxi  zImage
+boot.cmd  config-5.4.65-sunxi  dtb-5.4.65-sunxi  orangepiEnv.txt          
+overlay-user                     uInitrd         vmlinuz-5.4.65-sunxi
+
+$ sudo fdisk -l /dev/sdc
+Disk /dev/sdc: 29.7 GiB, 31914983424 bytes, 62333952 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0x6efe98ba
+
+Device     Boot Start      End  Sectors  Size Id Type
+/dev/sdc1        8192 61710591 61702400 29.4G 83 Linux
+```
