@@ -7,19 +7,19 @@
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>
 
-GLbyte vShaderStr[] =
+char vertex_shader_code[] =
  "attribute vec4 vPosition; \n"
-  "void main() \n"
-   "{ \n"
+ "void main() \n"
+ "{ \n"
     " gl_Position = vPosition; \n"
-     "}; \n";
+ "}; \n";
 
-GLbyte fShaderStr[] =
+char fragment_shader_code[] =
  "precision mediump float; \n"
-  "void main() \n"
-   "{ \n"
-    " gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0); \n"
-     "} \n";
+ "void main() \n"
+ "{ \n"
+  " gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0); \n"
+ "} \n";
 
 GLuint program;
 GLuint buffer;

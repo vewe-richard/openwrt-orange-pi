@@ -25,8 +25,7 @@ OBJ = $(patsubst %.c, %.o, $(SRC))
 # We use automatic variables to specify the final executable name 'helloworld', using '$@' and the '$^' will hold the names of all the
 # dependencies of this rule
 helloworld: $(OBJ)
-	echo $(CC) -o $@ $^ $(LDFLAGS)
-	$(CC) -o $@ $^ $(LDFLAGS)
+	$(CC) -o $@ hellomake.o $(LDFLAGS)
  
 # To clean build artifacts, we specify a 'clean' rule, and use PHONY to indicate that this rule never matches with a potential file in the directory
 .PHONY: clean
