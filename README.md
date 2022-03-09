@@ -1,7 +1,8 @@
 # openwrt-orange-pi
-openwrt on orange pi, video decoder using mali 400
+openwrt on orange pi, try to bring up mali 400
 
 #### 1. create container to build openwrt
+It's optional to build openwrt inside a container.
 ```
 ./docker.sh build
 ./docker.sh create
@@ -72,7 +73,10 @@ qemu-img resize n1.img 512M(or 2048M?)
 ./qemu.sh x86-h3
 ```
 
-#### 4 enable cedrus
+#### 4 test on orange pi R1 board
+Follow orange web site, use dd command to burn the image
+
+#### 5 enable cedrus
 Add below flags
 
 CONFIG_MEDIA_SUPPORT
@@ -87,7 +91,7 @@ make -j 8
 make -j 8 world
 ```
 
-#### 5 build libva, libva-v4l2-request
+#### 6 build libva, libva-v4l2-request
 ##### Preparation
 Download libva-v2.14-branch.zip, libva-v4l2-request-release-2019.03.zip to a directory and untar them.
 Clone openwrt-feeds-xorg. like this,
@@ -117,7 +121,23 @@ to build libva/libdrm/libva_v4l2_request
 > make V=s package/xxxxx/{clear,compile}
 
 
-#### 6 build mali mali drivers
+#### 7 build mali mali drivers
+```
+make V=s package/sunxi_mali/{clean,compile}
+```
+
+#### 8 build ffmpeg and examples hw_decode
+select package ffmpeg from menuconfig, and change the makefile to include examples compiling
+```
+make V=s package/ffmpeg/compile
+```
+
+#### 9 test egl/opengl sample application
+opengl sample application: multilangs/c/hellofunc.c
+egl sample application: multilangs/c/egltutorial.c
+```
+make V=s package/helloworld/{clean,compile}
+```
 
 
 # Appendix
